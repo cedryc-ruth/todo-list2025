@@ -30,10 +30,15 @@ frmTODO.onsubmit = function(e) {
 
 const ulTaskList = document.getElementById('taskList');
 
+const inputTask = document.getElementById('task');
+inputTask.onkeypress = function(e) {
+	if(e.key=='Enter') {
+		btAdd.click();
+	}
+};
+
 const btAdd = document.getElementById('btAdd');
 btAdd.onclick = function() {
-	const inputTask = document.getElementById('task');
-	
 	let liNewTask = document.createElement('li');	//<li></li>
 	liNewTask.innerHTML = inputTask.value;			//<li>Manger</li>
 
