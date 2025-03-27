@@ -34,15 +34,27 @@ const btAdd = document.getElementById('btAdd');
 btAdd.onclick = function() {
 	const inputTask = document.getElementById('task');
 	
-	let liNewTask = document.createElement('li');
-	liNewTask.innerHTML = inputTask.value+' <i class="fa-solid fa-trash delete"></i>';
+	let liNewTask = document.createElement('li');	//<li></li>
+	liNewTask.innerHTML = inputTask.value;			//<li>Manger</li>
+
+	//Créer le node I (corbeille)
+	let iNewTrash = document.createElement('i');	//<i></i>
+	iNewTrash.classList.add('fa-solid');			//<i class="fa-solid"></i>
+	iNewTrash.classList.add('fa-trash');			//<i class="fa-solid fa-trash"></i>
+	iNewTrash.classList.add('delete');				//<i class="fa-solid fa-trash delete"></i>
+	iNewTrash.onclick = function() {
+		ulTaskList.removeChild(this.parentElement);
+	};
+
+	//Ajouter le node I au LI parent
+	liNewTask.appendChild(iNewTrash);		//<li>Manger<i class="fa-solid fa-trash delete"></i></li>
+
 	liNewTask.onclick = function() {
-		ulTaskList.removeChild(this);
+		//ulTaskList.removeChild(this);
 	};
 	
 	//console.log(ulTaskList.innerHTML);
-	//ulTaskList.innerHTML += newTask;
-	ulTaskList.appendChild(liNewTask);
+	ulTaskList.appendChild(liNewTask);		//<ul>....<li>Manger<i class="fa-solid fa-trash delete"></i></li></ul>
 };
 
 const iDeletes = document.getElementsByClassName('delete');
