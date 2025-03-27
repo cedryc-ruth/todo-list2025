@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<title>TODO List</title>
+
+<link href="css/style.css" rel="stylesheet">
+<link href="js/fontawesome/css/all.css" rel="stylesheet">
+</head>
+<body>
+<h1>TODO List</h1>
+<form action="#" method="post" id="frmTODO">
+	<input type="text" name="task" id="task" placeholder="Entrez une tâche...">
+	<button type="button" name="btAdd" id="btAdd">Ajouter</button>
+</form>
+<ul id="taskList">
+	<li>Apprendre <i class="fa-solid fa-trash delete"></i></li>
+	<li>Découvrir <i class="fa-solid fa-trash delete"></i></li>
+	<li>S'amuser <i class="fa-solid fa-trash delete"></i></li>
+</ul>
+
+<script>
+//Lorsqu'on clique sur le bouton btAdd,
+//-> Lire le contenu du champ task
+//-> Ajouter un LI au UL taskList avec ce contenu
+const frmTODO = document.getElementById('frmTODO');
+frmTODO.onsubmit = function(e) {
+	e.preventDefault();
+}
+
+const ulTaskList = document.getElementById('taskList');
+
+const btAdd = document.getElementById('btAdd');
+btAdd.onclick = function() {
+	const inputTask = document.getElementById('task');
+	
+	let liNewTask = document.createElement('li');
+	liNewTask.innerHTML = inputTask.value+' <i class="fa-solid fa-trash delete"></i>';
+	liNewTask.onclick = function() {
+		ulTaskList.removeChild(this);
+	};
+	
+	//console.log(ulTaskList.innerHTML);
+	//ulTaskList.innerHTML += newTask;
+	ulTaskList.appendChild(liNewTask);
+};
+
+const iDeletes = document.getElementsByClassName('delete');
+//console.log(iDeletes);
+
+for(let iDelete of iDeletes) {
+	iDelete.onclick = function() {
+		let li = this.parentElement;
+		
+		ulTaskList.removeChild(li);
+	};
+}
+</script>
+</body>
+</html>

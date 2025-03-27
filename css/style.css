@@ -1,0 +1,18 @@
+/* CSS */
+ul#taskList {
+	width: 300px;
+	border: 1px solid gray;
+	border-radius: 5px;
+	padding: 10px;
+}
+
+li {
+	display: flex;
+	justify-content:space-between;
+	background-color: silver;
+	padding: 5px;
+}
+
+li:nth-child(2n+1) {
+	background-color: gray;
+}
