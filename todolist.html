@@ -50,7 +50,11 @@ btAdd.onclick = function() {
 	liNewTask.appendChild(iNewTrash);		//<li>Manger<i class="fa-solid fa-trash delete"></i></li>
 
 	liNewTask.onclick = function() {
-		//ulTaskList.removeChild(this);
+		if(this.style.textDecoration=='' || this.style.textDecoration=='none') {
+			this.style.textDecoration = 'line-through';
+		} else {
+			this.style.textDecoration = 'none';
+		}
 	};
 	
 	//console.log(ulTaskList.innerHTML);
