@@ -13,11 +13,14 @@
 	<input type="text" name="task" id="task" placeholder="Entrez une tâche...">
 	<button type="button" name="btAdd" id="btAdd">Ajouter</button>
 </form>
-<ul id="taskList">
+<ul id="taskList"><!--
 	<li>Apprendre <i class="fa-solid fa-trash delete"></i></li>
 	<li>Découvrir <i class="fa-solid fa-trash delete"></i></li>
-	<li>S'amuser <i class="fa-solid fa-trash delete"></i></li>
+	<li>S'amuser <i class="fa-solid fa-trash delete"></i></li>-->
 </ul>
+
+<button type="button" name="btRegister" id="btRegister">Enregistrer</button>
+<button type="button" name="btClear" id="btClear">Effacer tout</button>
 
 <script>
 //Lorsqu'on clique sur le bouton btAdd,
@@ -30,6 +33,39 @@ frmTODO.onsubmit = function(e) {
 
 const ulTaskList = document.getElementById('taskList');
 
+//Chargement de la liste sauvegardée ------------
+const savedTasks = JSON.parse(localStorage.getItem('tasks')) || [];
+//Afficher les tâches une par une
+for(let task of savedTasks) {
+	let liNewTask = document.createElement('li');	//<li></li>
+	liNewTask.innerHTML = task;						//<li>Manger</li>
+
+	//Créer le node I (corbeille)
+	let iNewTrash = document.createElement('i');	//<i></i>
+	iNewTrash.classList.add('fa-solid');			//<i class="fa-solid"></i>
+	iNewTrash.classList.add('fa-trash');			//<i class="fa-solid fa-trash"></i>
+	iNewTrash.classList.add('delete');				//<i class="fa-solid fa-trash delete"></i>
+	iNewTrash.onclick = function() {
+		ulTaskList.removeChild(this.parentElement);
+	};
+
+	//Ajouter le node I au LI parent
+	liNewTask.appendChild(iNewTrash);		//<li>Manger<i class="fa-solid fa-trash delete"></i></li>
+
+	liNewTask.onclick = function() {
+		if(this.style.textDecoration=='' || this.style.textDecoration=='none') {
+			this.style.textDecoration = 'line-through';
+		} else {
+			this.style.textDecoration = 'none';
+		}
+	};
+	
+	//console.log(ulTaskList.innerHTML);
+	ulTaskList.appendChild(liNewTask);	
+}
+//----------
+
+//Gestion du formulaire
 const inputTask = document.getElementById('task');
 inputTask.onkeypress = function(e) {
 	if(e.key=='Enter') {
@@ -64,11 +100,13 @@ btAdd.onclick = function() {
 	
 	//console.log(ulTaskList.innerHTML);
 	ulTaskList.appendChild(liNewTask);		//<ul>....<li>Manger<i class="fa-solid fa-trash delete"></i></li></ul>
+
+	//Effacer le champ texte
+	inputTask.value = '';
 };
 
+//Gestion de la suppression
 const iDeletes = document.getElementsByClassName('delete');
-//console.log(iDeletes);
-
 for(let iDelete of iDeletes) {
 	iDelete.onclick = function() {
 		let li = this.parentElement;
@@ -76,6 +114,26 @@ for(let iDelete of iDeletes) {
 		ulTaskList.removeChild(li);
 	};
 }
+
+//Gestion de la sauvegarde
+const btRegister = document.getElementById('btRegister');
+btRegister.onclick = function() {
+	//Récupérer la liste des tâches (Lire)
+	const tasks = ulTaskList.innerText.split('\n');
+
+	//Sauvegarder dans le localStorage la liste des tâches
+	localStorage.setItem('tasks',JSON.stringify(tasks));
+};
+
+const btClear = document.getElementById('btClear');
+btClear.onclick = function() {
+	//Supprimer la sauvegarder des tâches dans le storage
+	//localStorage.setItem('tasks',[]);
+	localStorage.removeItem('tasks');
+
+	//Effacer la liste de la page
+	ulTaskList.innerHTML = '';
+};
 </script>
 </body>
 </html>

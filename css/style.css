@@ -9,10 +9,20 @@ ul#taskList {
 li {
 	display: flex;
 	justify-content:space-between;
-	background-color: silver;
+	background-color: lightblue;
 	padding: 5px;
 }
 
 li:nth-child(2n+1) {
-	background-color: gray;
+	background-color: lightskyblue;
+}
+
+li i {
+	color: darkred;
+}
+
+li i:hover {
+	color: red;
+	text-shadow: 2px 2px 2px pink;
+	cursor: pointer;
 }
